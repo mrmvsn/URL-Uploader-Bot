@@ -51,10 +51,10 @@ async def echo(bot, update):
             await pablo.edit_text('Downloading...')
             bypasser = lk21.Bypass()
             xurl = bypasser.bypass_url(url)
-            if ' | ' in url:
-                url_parts = url.split(' | ')
+            if ' ' in url:
+                url_parts = url.split(' ')
                 url = url_parts[0]
-                file_name = url_parts[1]
+                file_name = url_parts[1] + ".mp4"
             else:
                 if xurl.find('/'):
                     urlname = xurl.rsplit('/', 1)[1]
@@ -78,7 +78,7 @@ async def echo(bot, update):
                 await bot.send_video(
                     chat_id=update.chat.id,
                     video=dldir,
-                    caption=file_name,
+                    caption=description,
                     duration=duration,
                     reply_to_message_id=update.message_id,
                     progress=progress_for_pyrogram,
@@ -92,7 +92,7 @@ async def echo(bot, update):
                 await bot.send_audio(
                     chat_id=update.chat.id,
                     audio=dldir,
-                    caption=file_name,
+                    caption=description,
                     duration=duration,
                     reply_to_message_id=update.message_id,
                     progress=progress_for_pyrogram,
@@ -118,8 +118,9 @@ async def echo(bot, update):
             await pablo.delete()
             shutil.rmtree(folder)
             return
-        if "|" in url:
-            url_parts = url.split("|")
+        if " " in url:
+            url_parts = url.split(" ")
+            description = url_parts[1]
             if len(url_parts) == 2:
                 url = url_parts[0]
                 file_name = url_parts[1]
