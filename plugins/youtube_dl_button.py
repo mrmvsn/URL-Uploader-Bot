@@ -60,14 +60,15 @@ async def youtube_dl_call_back(bot, update):
         "_" + youtube_dl_format + "." + youtube_dl_ext
     youtube_dl_username = None
     youtube_dl_password = None
-    if "|" in youtube_dl_url:
-        url_parts = youtube_dl_url.split("|")
+    if " " in youtube_dl_url:
+        url_parts = youtube_dl_url.split(" ")
+        description = url_parts[1]
         if len(url_parts) == 2:
             youtube_dl_url = url_parts[0]
-            custom_file_name = url_parts[1]
+            custom_file_name = url_parts[1] + ".mp4"
         elif len(url_parts) == 4:
             youtube_dl_url = url_parts[0]
-            custom_file_name = url_parts[1]
+            custom_file_name = url_parts[1] + ".mp4"
             youtube_dl_username = url_parts[2]
             youtube_dl_password = url_parts[3]
         else:
@@ -104,7 +105,6 @@ async def youtube_dl_call_back(bot, update):
     )
     user = await bot.get_me()
     mention = user["mention"]
-    description = Translation.CUSTOM_CAPTION_UL_FILE.format(mention)
     if "fulltitle" in response_json:
         description = response_json["fulltitle"][0:1021]
         # escape Markdown and special characters
@@ -321,36 +321,6 @@ async def youtube_dl_call_back(bot, update):
                 logger.info("Did this happen? :\\")
             end_two = datetime.now()
             time_taken_for_upload = (end_two - end_one).seconds
-            #
-            media_album_p = []
-            if images is not None:
-                i = 0
-                caption = "© @xTeamBots"
-                if is_w_f:
-                    caption = "@xurluploaderbot"
-                for image in images:
-                    if os.path.exists(str(image)):
-                        if i == 0:
-                            media_album_p.append(
-                                InputMediaPhoto(
-                                    media=image,
-                                    caption=caption,
-                                    parse_mode="html"
-                                )
-                            )
-                        else:
-                            media_album_p.append(
-                                InputMediaPhoto(
-                                    media=image
-                                )
-                            )
-                        i = i + 1
-            await bot.send_media_group(
-                chat_id=update.message.chat.id,
-                disable_notification=True,
-                reply_to_message_id=update.message.message_id,
-                media=media_album_p
-            )
             #
             try:
                 shutil.rmtree(tmp_directory_for_each_user)
