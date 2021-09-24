@@ -60,8 +60,8 @@ async def youtube_dl_call_back(bot, update):
         "_" + youtube_dl_format + "." + youtube_dl_ext
     youtube_dl_username = None
     youtube_dl_password = None
-    if " " in youtube_dl_url:
-        url_parts = youtube_dl_url.split(" ")
+    if "*" in youtube_dl_url:
+        url_parts = youtube_dl_url.split("*")
         description = url_parts[1]
         if len(url_parts) == 2:
             youtube_dl_url = url_parts[0]
@@ -105,9 +105,6 @@ async def youtube_dl_call_back(bot, update):
     )
     user = await bot.get_me()
     mention = user["mention"]
-    if "fulltitle" in response_json:
-        description = response_json["fulltitle"][0:1021]
-        # escape Markdown and special characters
     tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id)
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)
