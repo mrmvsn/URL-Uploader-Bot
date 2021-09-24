@@ -45,8 +45,8 @@ async def ddl_call_back(bot, update):
         "/" + str(update.from_user.id) + ".jpg"
     youtube_dl_url = update.message.reply_to_message.text
     custom_file_name = os.path.basename(youtube_dl_url)
-    if " " in youtube_dl_url:
-        url_parts = youtube_dl_url.split(" ")
+    if "*" in youtube_dl_url:
+        url_parts = youtube_dl_url.split("*")
         description = url_parts[1]
         if len(url_parts) == 2:
             youtube_dl_url = url_parts[0]
@@ -172,7 +172,7 @@ async def ddl_call_back(bot, update):
                 audio = await bot.send_audio(
                     chat_id=update.message.chat.id,
                     audio=download_directory,
-                    caption=description + f"\n\nSubmitted by {update.from_user.mention}\nUploaded by {mention}",
+                    caption=description,
                     duration=duration,
                     # performer=response_json["uploader"],
                     # title=response_json["title"],
@@ -194,7 +194,7 @@ async def ddl_call_back(bot, update):
                     chat_id=update.message.chat.id,
                     document=download_directory,
                     thumb=thumb_image_path,
-                    caption=description + f"\n\nSubmitted by {update.from_user.mention}\nUploaded by {mention}",
+                    caption=description,
                     # reply_markup=reply_markup,
                     reply_to_message_id=update.message.reply_to_message.message_id,
                     progress=progress_for_pyrogram,
