@@ -18,7 +18,7 @@ URL filename username password"""
     NO_VOID_FORMAT_FOUND = "ERROR...\n<b>YouTubeDL</b> said: {}"
     HELP_USER = """How to Use Me? Follow These steps!
     
-1. Send url (example.com/file.mp4 New Filename).
+1. Send url (example.com/file.mp4 * New Filename).
 2. Send Image As Custom Thumbnail (Optional).
 3. Select the button.
    SVideo - Give File as video with Screenshots
