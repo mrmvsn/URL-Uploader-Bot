@@ -48,3 +48,13 @@ async def start(bot, update):
             text=Translation.START_TEXT.format(update.from_user.first_name),
             reply_to_message_id=update.message_id
         )
+
+@pyrogram.Client.on_message(pyrogram.filters.reply & pyrogram.filters.text)
+async def edit_caption(bot, update):
+    logger.info(update)
+    await bot.send_cached_media(
+        chat_id=update.chat.id,
+        file_id=update.reply_to_message.video.file_id,
+        reply_to_message_id=update.message_id,
+        caption=update.text
+    )
