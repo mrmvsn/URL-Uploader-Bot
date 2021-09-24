@@ -45,11 +45,12 @@ async def ddl_call_back(bot, update):
         "/" + str(update.from_user.id) + ".jpg"
     youtube_dl_url = update.message.reply_to_message.text
     custom_file_name = os.path.basename(youtube_dl_url)
-    if "|" in youtube_dl_url:
-        url_parts = youtube_dl_url.split("|")
+    if " " in youtube_dl_url:
+        url_parts = youtube_dl_url.split(" ")
+        description = url_parts[1]
         if len(url_parts) == 2:
             youtube_dl_url = url_parts[0]
-            custom_file_name = url_parts[1]
+            custom_file_name = url_parts[1] + ".mp4"
         else:
             for entity in update.message.reply_to_message.entities:
                 if entity.type == "text_link":
@@ -75,7 +76,6 @@ async def ddl_call_back(bot, update):
                 youtube_dl_url = youtube_dl_url[o:o + l]
     user = await bot.get_me()
     mention = user["mention"]
-    description = Translation.CUSTOM_CAPTION_UL_FILE.format(mention)
     start = datetime.now()
     await bot.edit_message_text(
         text=Translation.DOWNLOAD_START,
@@ -230,7 +230,7 @@ async def ddl_call_back(bot, update):
                 video = await bot.send_video(
                     chat_id=update.message.chat.id,
                     video=download_directory,
-                    caption=description + f"\n\nSubmitted by {update.from_user.mention}\nUploaded by {mention}",
+                    caption=description,
                     duration=duration,
                     width=width,
                     height=height,
