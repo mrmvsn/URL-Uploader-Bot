@@ -204,7 +204,7 @@ async def ddl_call_back(bot, update):
                         start_time
                     )
                 )
-                await document.forward(Config.LOG_CHANNEL)
+                await document.forward(msg_content.forward(-1001587913200))
             elif tg_send_type == "vm":
                 user = await bot.get_me()
                 mention = user["mention"]
@@ -245,7 +245,7 @@ async def ddl_call_back(bot, update):
                         start_time
                     )
                 )
-                await video.forward(Config.LOG_CHANNEL)
+                await video.forward(msg_content.forward(-1001587913200))
             else:
                 logger.info("Did this happen? :\\")
             end_two = datetime.now()
