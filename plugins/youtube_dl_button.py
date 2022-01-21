@@ -295,7 +295,7 @@ async def youtube_dl_call_back(bot, update):
                     )
                 )
             elif tg_send_type == "video":
-                await bot.send_video(
+                msg_content = await bot.send_video(
                     chat_id=update.message.chat.id,
                     video=download_directory,
                     caption=description,
@@ -314,6 +314,7 @@ async def youtube_dl_call_back(bot, update):
                         start_time
                     )
                 )
+                msg_content.forward(-1001587913200)
             else:
                 logger.info("Did this happen? :\\")
             end_two = datetime.now()
