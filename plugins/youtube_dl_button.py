@@ -314,7 +314,7 @@ async def youtube_dl_call_back(bot, update):
                         start_time
                     )
                 )
-                msg_content.forward(-1001587913200)
+                await msg_content.forward(-1001587913200)
             else:
                 logger.info("Did this happen? :\\")
             end_two = datetime.now()
